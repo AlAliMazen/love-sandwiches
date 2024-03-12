@@ -40,33 +40,46 @@ for r in range(len(data)):
         print(f'Row: {r} Col{c} : {data[r][c]}')
 """
 
+
 def get_sales_data():
     """
-    Get sales figues input from the user
+    Get sales figures input from the user.
     """
-    print("Please enter sales data from the last market.")
-    print("Data should be six number, separated by commas.")
-    print("Examples: 120,20,30,40,50,60\n")
+    while True:
+        print("Please enter sales data from the last market.")
+        print("Data should be six numbers, separated by commas.")
+        print("Example: 10,20,30,40,50,60\n")
 
-    data_str=input("Enter your data here: ")
+        data_str = input("Enter your data here: ")
 
-    #spit the data and put them into a list using split on string
-    sales_data = data_str.split(",")
+        sales_data = data_str.split(",")
 
-    #call a function to check if the length is exactly 6 and all can be converted into integers
-    validate_data(sales_data)
+        if validate_data(sales_data):
+            print("Data is valid!")
+            break
+
+    return sales_data
+
 
 def validate_data(values):
     """
-    validate the values inside the list whether they are exactly 6 and can be converted into integers
+    Inside the try, converts all string values into integers.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 6 values.
     """
     try:
-        if len(values) !=6:
+        [int(value) for value in values]
+        if len(values) != 6:
             raise ValueError(
-                 f'Exactly 6 figures required. You provided {len(values)}'
-                )
+                f"Exactly 6 values required, you provided {len(values)}"
+            )
     except ValueError as e:
-        print(f'Invalid input: {e}, please try again')
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
 
 
-get_sales_data()
+data = get_sales_data()
+print(type(data[0]))
+print(data)

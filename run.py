@@ -76,25 +76,18 @@ def validate_data(values):
         return False
 
     return True
+# the two functions for updating sales and surplus worksheets are now removed and refactored
 
-def update_sales_worksheet(data):
-    """
-    update sales worksheet, add new row with the list data provided.
-    """
-    print("Updating sales worksheet...\n")
-    sales_worksheet=SHEET.worksheet('sales')
-    sales_worksheet.append_row(data)
-    print("Sales worksheet was updated successfully\n")
 
-def update_surplus_worksheet(data):
+# refactoring the code is the process of restructuring the code to improve its readability 
+def update_worksheet(data, worksheet):
     """
-    update surplus worksheet, add new row with the list data provided.
+    update worksheet, add new row with the list data provided.
     """
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet=SHEET.worksheet('surplus')
-    surplus_worksheet.append_row(data)
-    print("surplus worksheet was updated successfully\n")
-
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update=SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet was updated successfully\n")
 
 def calculate_surplus_data(sales_data):
     """
@@ -109,7 +102,6 @@ def calculate_surplus_data(sales_data):
     stock=SHEET.worksheet('stock').get_all_values()
     #pprint(stock)#this function is used to print the whole list in a table like
     stock_row=stock[-1]
-    print(stock_row)
     # now we need a way of subtracting two lists or rows of a list. in order to do this we need to use the zip function 
     surplus_data=[]
     for stock, sales in zip(stock_row,sales_data):
@@ -130,9 +122,9 @@ def main():
     """
     data = get_sales_data()
     sales_data=[int(value) for value in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data,"sales")
     new_surplus_data=calculate_surplus_data(sales_data)
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data,"surplus")
 
 print("Welcome to love Sandwiches Data automation")
 main()

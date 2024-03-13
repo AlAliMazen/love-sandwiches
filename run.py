@@ -128,6 +128,28 @@ def get_last_5_entries_sales():
     
     return columns
 
+
+def calculate_stock_data(data):
+    """
+    Calculate the average stock for each item type, adding 10%
+    """
+    print("Calculate stock data...\n")
+    new_stock_data = []
+    for column in data:
+        int_column=[int(val) for val in column]
+        average=sum(int_column)/len(column)
+        stock_num=average*1.1
+        new_stock_data.append(round(stock_num))
+    
+    return new_stock_data
+
+
+
+
+
+
+
+
 # it is best practice to wrap all calling function in a main function which in turn call other functions
 def main():
     """
@@ -138,9 +160,9 @@ def main():
     update_worksheet(sales_data,"sales")
     new_surplus_data=calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data,"surplus")
+    last_5_sales_entries=get_last_5_entries_sales()
+    stock_data=calculate_stock_data(last_5_sales_entries)
+    update_worksheet(stock_data,"stock")
 
 print("Welcome to love Sandwiches Data automation")
-# main()
-
-last_5_sales_entries=get_last_5_entries_sales()
-pprint(last_5_sales_entries)
+main()

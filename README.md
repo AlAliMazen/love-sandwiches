@@ -31,4 +31,5 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 ## This section is added from VS Code instead of Code Anywhere IDE
 ---
 
+### Hello fro PyCharm IDE
 Happy coding!
